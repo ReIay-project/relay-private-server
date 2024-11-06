@@ -1,34 +1,45 @@
-using System.Data.SqlClient;
+using System.Data;
+using Npgsql;
+using Microsoft.Extensions.Logging;
 
-namespace Relay.DBUtility;
-
-public class DbCommon(
-    string connectionString,
-    string tableName)
+namespace Relay.DBUtility
 {
-    public string ConnectionString { get; } = connectionString;
-    public string DatabaseName { get; } = "relay";
-    public string TableName { get; } = tableName;
-    public SqlConnection Connection;
-
-    public void Connect()
+    /// <summary>
+    /// Класс для операций с базой данных PostgreSQL.
+    /// </summary>
+    public class DbCommon
     {
-        var connectionString = new SqlConnectionStringBuilder(ConnectionString) { InitialCatalog = DatabaseName }.ConnectionString;
-        Connection = new SqlConnection(connectionString);
-    }
+        private readonly string _connectionString;
+        private readonly ILogger<DbCommon> _logger;
 
-    public object GetData(string query)
-    {
-        Connection.Open();
-        var command = Connection.CreateCommand();
-        command.CommandText = query;
-        var result = command.ExecuteReader();
-        Connection.Close();
-        return result;
-    }
+        public DbCommon(string connectionString, ILogger<DbCommon> logger)
+        {
+            _connectionString = connectionString;
+            _logger = logger;
+        }
 
-    public void UpdateData(object data)
-    {
-        throw new NotImplementedException();
+        /// <summary> Метод для создания подключения к базе данных. </summary>
+        private IDbConnection CreateConnection()
+        {
+            return new NpgsqlConnection(_connectionString);
+        }
+
+        /// <summary> Получение данных по запросу. </summary>
+        public async Task<object> GetDataAsync(string query)
+        {
+            await using var connection = CreateConnection() as NpgsqlConnection;
+            if (connection is null) throw new InvalidOperationException("Ошибка при создании подключения.");
+
+            await connection.OpenAsync();
+            await using var command = new NpgsqlCommand(query, connection);
+            var result = await command.ExecuteReaderAsync();
+            return result;
+        }
+
+        /// <summary> Метод для обновления данных в БД. </summary>
+        public Task UpdateDataAsync(object data)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

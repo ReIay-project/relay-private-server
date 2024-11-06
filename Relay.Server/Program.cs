@@ -1,77 +1,84 @@
-using System.Net;
-using System.Net.WebSockets;
-using System.Text;
-using System.Text.Json;
-using Microsoft.AspNetCore.Cors.Infrastructure;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Server.Kestrel.Core;
-using Serilog;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Diagnostics.Internal;
-using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
-using MySqlConnector;
+using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Relay.DBUtility;
-using Relay.DBUtility;
-using Relay.DBUtility.Models;
 using Relay.Server.Services;
-using Serilog.Core;
-using Serilog.Events;
-using ILogger = Serilog.ILogger;
+using Relay.Middlewares;
+using Serilog;
+using System.Text;
+using Relay.Services;
 
-namespace Relay.Server;
-
-public class Program
+namespace Relay.Server
 {
-    public static async Task Main(string[] args)
+    public class Program
     {
-        var builder = WebApplication.CreateBuilder(args);
-        var address = builder.Configuration["ServerAddress"];
-        var port = int.Parse(builder.Configuration["ServerPort"] ?? throw new InvalidOperationException());
-
-        var levelSwitch = new LoggingLevelSwitch();
-        levelSwitch.MinimumLevel = LogEventLevel.Debug;
-        Log.Logger = new LoggerConfiguration()
-            .MinimumLevel.ControlledBy(levelSwitch)
-            .WriteTo.Console()
-            .CreateLogger();
-
-        var stringBuilder = new MySqlConnectionStringBuilder();
-        stringBuilder.Server = builder.Configuration["Server"];
-        stringBuilder.Port = uint.Parse(builder.Configuration["Port"]);
-        stringBuilder.UserID = builder.Configuration["UserID"];
-        stringBuilder.Password = builder.Configuration["Password"];
-        stringBuilder.Database = builder.Configuration["Database"];
-
-
-        builder.WebHost.UseUrls($"http://{address}:{port}");
-
-        // Add services to the container.
-        var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ??
-                               throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-
-        builder.Services.AddSerilog();
-        builder.Services.AddSignalR(options =>
+        public static async Task Main(string[] args)
         {
-            options.EnableDetailedErrors = true;
-        });
+            var builder = WebApplication.CreateBuilder(args);
 
-        Log.Information(nameof(stringBuilder) + ":" + stringBuilder);
-        /*
-        builder.Services.AddDbContext<DbServer>(optionsBuilder =>
-        {
-            optionsBuilder.UseMySql(stringBuilder.ConnectionString, ServerVersion.AutoDetect(stringBuilder.ConnectionString));
-            Log.Information(optionsBuilder.IsConfigured.ToString());
-        });*/
+            // Настройка логирования
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Debug()
+                .WriteTo.Console()
+                .CreateLogger();
+            builder.Logging.ClearProviders();
+            builder.Logging.AddSerilog();
 
-        var app = builder.Build();
-        app.UseWebSockets();
+            // Подключение к базе данных PostgreSQL
+            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ??
+                                   throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+            builder.Services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseNpgsql(connectionString));
 
-        app.MapHub<WebSocketUtilities>("/WebSocketUtilities");
+            // Настройка JWT-аутентификации
+            var jwtKey = builder.Configuration["Jwt:Key"] ?? throw new InvalidOperationException("JWT Key отсутствует в конфигурации.");
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+                        ValidAudience = builder.Configuration["Jwt:Audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
+                    };
+                });
 
-        Log.Information("Application starting...");
-        await app.RunAsync();
+            // Подключение сервисов и контроллеров
+            builder.Services.AddScoped<IUserService, UserService>();
+            builder.Services.AddScoped<IChatService, ChatService>();
+            builder.Services.AddScoped<IServerService, ServerService>();
+            builder.Services.AddControllers();
+
+            // Swagger-документация для API
+            if (builder.Environment.IsDevelopment())
+            {
+                builder.Services.AddEndpointsApiExplorer();
+                builder.Services.AddSwaggerGen();
+            }
+
+            var app = builder.Build();
+
+            // Настройка middleware и инициализация БД
+            if (app.Environment.IsDevelopment())
+            {
+                app.UseSwagger();
+                app.UseSwaggerUI();
+            }
+
+            app.UseMiddleware<LocalizationMiddleware>();
+            app.UseAuthentication();
+            app.UseAuthorization();
+            app.MapControllers();
+
+            Log.Information("Application starting...");
+            await app.RunAsync();
+        }
     }
 }

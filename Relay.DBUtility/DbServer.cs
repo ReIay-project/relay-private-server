@@ -1,34 +1,33 @@
-using System.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Relay.DBUtility.Models;
+using Relay.Models;
 
-namespace Relay.DBUtility;
-
-public class DbCommon(
-    string connectionString,
-    string tableName)
+namespace Relay.DBUtility
 {
-    public string ConnectionString { get; } = connectionString;
-    public string DatabaseName { get; } = "relay";
-    public string TableName { get; } = tableName;
-    public SqlConnection Connection;
-
-    public void Connect()
+    /// <summary>
+    /// Контекст базы данных для использования с Entity Framework.
+    /// </summary>
+    public class DbServer : DbContext
     {
-        var connectionString = new SqlConnectionStringBuilder(ConnectionString) { InitialCatalog = DatabaseName }.ConnectionString;
-        Connection = new SqlConnection(connectionString);
-    }
+        private readonly ILogger<DbServer> _logger;
 
-    public object GetData(string query)
-    {
-        Connection.Open();
-        var command = Connection.CreateCommand();
-        command.CommandText = query;
-        var result = command.ExecuteReader();
-        Connection.Close();
-        return result;
-    }
+        public DbServer(DbContextOptions<DbServer> options, ILogger<DbServer> logger) : base(options)
+        {
+            _logger = logger;
+        }
 
-    public void UpdateData(object data)
-    {
-        throw new NotImplementedException();
+        public DbSet<User> Users { get; set; }
+        public DbSet<Chat> Chats { get; set; }
+        public DbSet<Message> Messages { get; set; }
+        public DbSet<ServerDbModel> Servers { get; set; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseNpgsql();
+            }
+        }
     }
 }

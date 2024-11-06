@@ -1,34 +1,35 @@
 using Microsoft.EntityFrameworkCore;
 using Relay.DBUtility;
-using Relay.DBUtility;
-using Relay.DBUtility.Models;
+using Relay.Models;
 using Serilog;
 
-namespace Relay.Server.Services;
-
-public class UserUtilities(DbServer context)
+namespace Relay.Server.Services
 {
-    public async Task Connect(int id, string userName)
+    public class UserUtilities
     {
-        if (IsUserExists(userName).Result)
+        private readonly DbServer _context;
+
+        public UserUtilities(DbServer context)
         {
-            Log.Information("User {user} already exists.", userName);
-            return;
+            _context = context;
         }
-        context.Users.Add(new User(id, userName)
+
+        public async Task Connect(int id, string userName)
         {
-            Id = id,
-            Name = userName
-        });
-        await context.SaveChangesAsync();
-        Log.Information("User {user} connected.", userName);
-    }
+            if (await IsUserExists(userName))
+            {
+                Log.Information("User {user} already exists.", userName);
+                return;
+            }
 
-    public async Task<bool> IsUserExists(string userName) =>
-        await context.FindAsync<string>(userName) == null;
+            _context.Users.Add(new User { Id = id, Name = userName });
+            await _context.SaveChangesAsync();
+            Log.Information("User {user} connected.", userName);
+        }
 
-    public async Task<int> GetNewUserId()
-    {
-        return await context.Users.CountAsync();
+        public async Task<bool> IsUserExists(string userName) =>
+            await _context.Users.AnyAsync(u => u.Name == userName);
+
+        public async Task<int> GetNewUserId() => await _context.Users.CountAsync();
     }
 }

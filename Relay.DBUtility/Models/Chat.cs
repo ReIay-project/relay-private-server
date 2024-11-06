@@ -1,16 +1,25 @@
-using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
-namespace Relay.DBUtility.Models;
-
-public class Chat(string name, int id) : DbContext
+namespace Relay.Models
 {
-    public int Id { get; set; } = id;
+    /// <summary>
+    /// Модель для представления чата.
+    /// </summary>
+    public class Chat
+    {
+        /// <summary> Идентификатор чата. </summary>
+        public int Id { get; set; }
 
-    public required string Name { get; set; } = name;
+        /// <summary> Название чата. </summary>
+        public string Name { get; set; } = string.Empty;
 
-    public IEnumerable<Message>? Messages { get; set; }
+        /// <summary> Признак того, является ли чат групповым. </summary>
+        public bool IsGroupChat { get; set; }
 
-    public IEnumerable<User>? Users { get; set; }
+        /// <summary> Список сообщений в чате. </summary>
+        public List<Message> Messages { get; set; } = new List<Message>();
 
-    public static string TableName { get; } = "chats";
+        /// <summary> Список пользователей в чате. </summary>
+        public List<User> Users { get; set; } = new List<User>();
+    }
 }

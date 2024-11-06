@@ -1,12 +1,23 @@
-using Microsoft.EntityFrameworkCore;
-
-namespace Relay.DBUtility.Models;
-
-public class Server : DbContext
+namespace Relay.DBUtility.Models
 {
-    public required int Id { get; set; }
-    public required string Name { get; set; }
-    public required string Address { get; set; }
-    public int Port { get; set; }
-    public string? Password { get; set; }
+    /// <summary>
+    /// Модель для представления сервера.
+    /// </summary>
+    public class ServerDbModel
+    {
+        /// <summary> Идентификатор сервера. </summary>
+        public int Id { get; set; }
+
+        /// <summary> Название сервера. </summary>
+        public string Name { get; set; } = string.Empty;
+
+        /// <summary> IP-адрес или домен сервера. </summary>
+        public string Address { get; set; } = string.Empty;
+
+        /// <summary> Порт, используемый для подключения к серверу. </summary>
+        public int Port { get; set; }
+
+        /// <summary> Пароль для доступа к серверу. </summary>
+        public string? Password { get; set; }
+    }
 }
