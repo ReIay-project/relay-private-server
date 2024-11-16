@@ -1,0 +1,41 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <Deterministic>false</Deterministic>
+        <PublicSign>false</PublicSign>
+        <AssemblyVersion>0.1.*</AssemblyVersion>
+        <FileVersion>0.1.*</FileVersion>
+        <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+        <DocumentationFile></DocumentationFile>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+        <DocumentationFile>bin\Release\ServerCore.xml</DocumentationFile>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Folder Include="Properties\"/>
+        <Folder Include="Server\Commands\"/>
+        <Folder Include="Server\Messages\"/>
+        <Folder Include="Server\Permissions\"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Abp.AspNetCore" Version="9.4.2"/>
+        <PackageReference Include="Abp.AutoMapper" Version="9.4.2"/>
+        <PackageReference Include="Abp.ZeroCore" Version="9.4.2"/>
+        <PackageReference Include="Abp.ZeroCore.EntityFrameworkCore" Version="9.4.2"/>
+        <PackageReference Include="Castle.Windsor.MsDependencyInjection" Version="4.1.0"/>
+        <PackageReference Include="Microsoft.AspNetCore.SignalR.Common" Version="9.0.0"/>
+        <PackageReference Include="Microsoft.Extensions.ApiDescription.Server" Version="9.0.0">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+    </ItemGroup>
+
+</Project>

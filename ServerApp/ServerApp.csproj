@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <Deterministic>false</Deterministic>
+        <AssemblyVersion>0.1.*</AssemblyVersion>
+        <FileVersion>0.1.*</FileVersion>
+        <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
+        <LangVersion>default</LangVersion>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Abp" Version="9.4.2"/>
+        <PackageReference Include="Abp.AspNetCore" Version="9.4.2"/>
+        <PackageReference Include="Microsoft.Extensions.ApiDescription.Server" Version="9.0.0">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\ServerCore\ServerCore.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Folder Include="Properties\"/>
+    </ItemGroup>
+
+</Project>

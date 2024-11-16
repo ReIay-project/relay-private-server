@@ -1,0 +1,45 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <PublicSign>false</PublicSign>
+        <IsPackable>false</IsPackable>
+        <Version></Version>
+        <Deterministic>false</Deterministic>
+        <AssemblyVersion>0.1.*</AssemblyVersion>
+        <FileVersion>0.1.*</FileVersion>
+        <NeutralLanguage>en</NeutralLanguage>
+        <LangVersion>default</LangVersion>
+        <TargetFramework>net9.0</TargetFramework>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+        <DocumentationFile></DocumentationFile>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+        <DocumentationFile>bin\Release\ServerWebCore.xml</DocumentationFile>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\DataBaseService\DataBaseService.csproj"/>
+        <ProjectReference Include="..\ServerApp\ServerApp.csproj"/>
+        <ProjectReference Include="..\ServerCore\ServerCore.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Folder Include="Properties\"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Abp.AspNetCore.SignalR" Version="9.4.2"/>
+        <PackageReference Include="Castle.Windsor.MsDependencyInjection" Version="4.1.0"/>
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.0"/>
+        <PackageReference Include="Microsoft.Extensions.ApiDescription.Server" Version="9.0.0">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+    </ItemGroup>
+
+</Project>

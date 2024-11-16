@@ -1,10 +1,14 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Relay.Server", "Relay.Server\Relay.Server.csproj", "{41A57981-413C-4C34-9AB5-A5445E7D17FA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerWeb", "ServerWeb\ServerWeb.csproj", "{41A57981-413C-4C34-9AB5-A5445E7D17FA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Relay.DBUtility", "Relay.DBUtility\Relay.DBUtility.csproj", "{A7A82EE0-F945-41E9-BC46-6A4C398F11CF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataBaseService", "DataBaseService\DataBaseService.csproj", "{A7A82EE0-F945-41E9-BC46-6A4C398F11CF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Relay.TestChat", "Relay.TestChat\Relay.TestChat.csproj", "{07D3868C-4445-4CFA-9E22-C41698DBC053}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerCore", "ServerCore\ServerCore.csproj", "{F6423D45-ED59-4292-AE14-8B498986FC0A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerApp", "ServerApp\ServerApp.csproj", "{C494323B-317F-4010-AF29-315D684EE30D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerWebCore", "ServerWebCore\ServerWebCore.csproj", "{EC23C8D8-4A46-4043-A37B-086CBCD29130}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,9 +24,17 @@ Global
 		{A7A82EE0-F945-41E9-BC46-6A4C398F11CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A7A82EE0-F945-41E9-BC46-6A4C398F11CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A7A82EE0-F945-41E9-BC46-6A4C398F11CF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{07D3868C-4445-4CFA-9E22-C41698DBC053}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{07D3868C-4445-4CFA-9E22-C41698DBC053}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{07D3868C-4445-4CFA-9E22-C41698DBC053}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{07D3868C-4445-4CFA-9E22-C41698DBC053}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6423D45-ED59-4292-AE14-8B498986FC0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6423D45-ED59-4292-AE14-8B498986FC0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6423D45-ED59-4292-AE14-8B498986FC0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6423D45-ED59-4292-AE14-8B498986FC0A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C494323B-317F-4010-AF29-315D684EE30D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C494323B-317F-4010-AF29-315D684EE30D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C494323B-317F-4010-AF29-315D684EE30D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C494323B-317F-4010-AF29-315D684EE30D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC23C8D8-4A46-4043-A37B-086CBCD29130}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC23C8D8-4A46-4043-A37B-086CBCD29130}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC23C8D8-4A46-4043-A37B-086CBCD29130}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC23C8D8-4A46-4043-A37B-086CBCD29130}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
