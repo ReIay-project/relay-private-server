@@ -33,13 +33,14 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Abp.AspNetCore.SignalR" Version="9.4.2"/>
+        <PackageReference Include="Abp.AspNetCore.SignalR" Version="10.0.0" />
         <PackageReference Include="Castle.Windsor.MsDependencyInjection" Version="4.1.0"/>
         <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.0"/>
         <PackageReference Include="Microsoft.Extensions.ApiDescription.Server" Version="9.0.0">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
+        <PackageReference Include="System.Text.Json" Version="9.0.0" />
     </ItemGroup>
 
 </Project>

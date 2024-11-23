@@ -1,0 +1,12 @@
+﻿services:
+  serverweb:
+    image: serverweb
+    build:
+      context: .
+      dockerfile: ServerWeb/Dockerfile
+
+  serverweb-1:
+    image: serverweb-1
+    build:
+      context: .
+      dockerfile: ServerWeb/Dockerfile

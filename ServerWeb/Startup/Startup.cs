@@ -45,7 +45,6 @@ public class Startup
 
         IdentityRegistrar.Register(services);
         AuthConfigurer.Configure(services, _appConfiguration);
-        services.AddSignalR();
 
         // Swagger - Enable this line and the related lines in Configure method to enable swagger UI
         services.AddControllers();
@@ -67,17 +66,21 @@ public class Startup
             });
         services.AddWebSockets(options =>
         {
-            options.AllowedOrigins.Add("*");
-            options.AllowedOrigins.Add("http://localhost");
-            options.KeepAliveInterval = TimeSpan.FromMinutes(5);
+            //options.AllowedOrigins.Add("http://localhost:1420/");
+            //options.KeepAliveInterval = TimeSpan.FromMinutes(5);
         });
         services.AddCors(options =>
         {
             options.AddPolicy(AllowAnyOrigins,
                 builder => builder
                     .AllowAnyOrigin()
+                    .SetIsOriginAllowedToAllowWildcardSubdomains()
                     .AllowAnyMethod()
                     .AllowAnyHeader());
+        });
+        services.AddSignalR(options =>
+        {
+            //options.SupportedProtocols.Add("websoket");
         });
     }
 
@@ -85,11 +88,11 @@ public class Startup
     {
         app.UseAbp(options => options.UseAbpRequestLocalization = false); // Initializes ABP framework.
 
-        app.UseCors(AllowAnyOrigins); // Enable CORS!
         app.UseStaticFiles();
+        app.UseCors(AllowAnyOrigins); // Enable CORS!
         app.UseAuthentication();
-        app.UseAuthorization();
         app.UseRouting();
+        app.UseAuthorization();
         app.UseWebSockets();
         app.UseEndpoints(endpoints =>
         {

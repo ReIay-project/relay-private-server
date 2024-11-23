@@ -9,6 +9,7 @@
         <FileVersion>0.1.*</FileVersion>
         <LangVersion>default</LangVersion>
         <TargetFramework>net9.0</TargetFramework>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -26,10 +27,10 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Abp.AspNetCore" Version="9.4.2"/>
-        <PackageReference Include="Abp.ZeroCore" Version="9.4.2"/>
+        <PackageReference Include="Abp.AspNetCore" Version="10.0.0" />
+        <PackageReference Include="Abp.ZeroCore" Version="10.0.0" />
         <PackageReference Include="Jason.Abp.Castle.Serilog" Version="1.0.0"/>
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.0-rc.2.24474.1">
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.0">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
@@ -37,16 +38,16 @@
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="NSwag.AspNetCore" Version="14.1.0" />
+        <PackageReference Include="NSwag.AspNetCore" Version="14.2.0" />
         <PackageReference Include="Serilog" Version="4.1.0"/>
         <PackageReference Include="Serilog.AspNetCore" Version="8.0.3"/>
         <PackageReference Include="Serilog.Extensions.Logging.File" Version="3.0.0" />
         <PackageReference Include="Serilog.Settings.Configuration" Version="8.0.4" />
         <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0"/>
         <PackageReference Include="SignalRSwaggerGen" Version="4.7.0"/>
-        <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.7.3"/>
-        <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.7.3"/>
-        <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.7.3"/>
+        <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="7.0.0"/>
+        <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="7.0.0"/>
+        <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="7.0.0"/>
     </ItemGroup>
 
     <ItemGroup>
@@ -56,7 +57,6 @@
 
     <ItemGroup>
         <Compile Remove="RelayHubModule.cs"/>
-        <None Include="RelayHubModule.cs"/>
     </ItemGroup>
 
     <ItemGroup>
@@ -67,6 +67,9 @@
 
     <ItemGroup>
       <Content Remove="wwwroot\swagger\ui\index.html" />
+      <Content Include="..\.dockerignore">
+        <Link>.dockerignore</Link>
+      </Content>
       <EmbeddedResource Include="wwwroot\swagger\ui\index.html">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </EmbeddedResource>
