@@ -30,18 +30,21 @@ Relay использует **ASP.NET Core** и **Abp Framework** для созд
 "Default": "User ID=postgres;Password=example_pwd;Host=127.0.0.1;Port=5433;Database=relay;Pooling=true;"
 }
 ```
-Если вы меняете порт или другие параметры подключения, не забудьте обновить строку подключения в соответствующих файлах.
+Если вы меняете порт или другие параметры подключения, не забудьте обновить строку подключения и пароль в соответствующих файлах.
 
 4. Применение миграций
    Перейдите в директорию проекта и выполните команду для применения миграций:
    ```bash
-   dotnet ef database update --project C:\path\to\your\project\DataBaseService\DataBaseService.csproj --context RelayDbContext --connection "User ID=postgres;Password=serval;Host=127.0.0.1;Port=5433;Database=relay;Pooling=true;"
+   dotnet ef database update --project C:\path\to\your\project\DataBaseService\DataBaseService.csproj --context RelayDbContext --connection "User ID=postgres;Password=example_pwd;Host=127.0.0.1;Port=5433;Database=relay;Pooling=true;"
    ```
 5. Запуск приложения
    После того как все миграции будут применены и база данных настроена, вы можете запустить сервер:
    ```bash
    dotnet run --project C:\path\to\your\project\ServerWeb\ServerWeb.csproj
    ```
+
+   ServerWeb\ServerWeb.csproj - это исполняемый файл.   
+
 6. Проверка работы приложения
    Откройте браузер и перейдите по адресу:
 
