@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
+        <OutputType>Library</OutputType>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <Deterministic>false</Deterministic>
@@ -8,8 +9,9 @@
         <FileVersion>0.1.*</FileVersion>
         <LangVersion>default</LangVersion>
         <TargetFramework>net9.0</TargetFramework>
+        <OpenApiGenerateDocuments>false</OpenApiGenerateDocuments>
     </PropertyGroup>
-
+    
     <ItemGroup>
         <PackageReference Include="Abp" Version="10.0.0" />
         <PackageReference Include="Abp.AspNetCore" Version="10.0.0" />
