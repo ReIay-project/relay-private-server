@@ -59,6 +59,9 @@ public class Startup
                 options.IocManager.IocContainer.AddFacility<LoggingFacility>(f =>
                     f.UseAbpSerilog(configuration => configuration.ReadFrom.Configuration(_appConfiguration)));
                 
+                var connectionString = _appConfiguration.GetConnectionString("Default");
+                Console.WriteLine($"Startup Connection String: {connectionString}");
+                
                 options.PlugInSources.Add(new FolderPlugInSource(
                     Path.Combine(WebContentDirectoryFinder.CalculateContentRootFolder() + "/Plugins/")));
                 
