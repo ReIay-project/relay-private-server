@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
     <PropertyGroup>
+        <OutputType>Exe</OutputType>
         <Nullable>enable</Nullable>
         <Deterministic>false</Deterministic>
         <ImplicitUsings>enable</ImplicitUsings>
@@ -10,6 +11,7 @@
         <LangVersion>default</LangVersion>
         <TargetFramework>net9.0</TargetFramework>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+        <OpenApiGenerateDocuments>false</OpenApiGenerateDocuments>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -21,15 +23,15 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\DataBaseService\DataBaseService.csproj"/>
-        <ProjectReference Include="..\ServerApp\ServerApp.csproj"/>
-        <ProjectReference Include="..\ServerWebCore\ServerWebCore.csproj"/>
+        <ProjectReference Include="..\DataBaseService\DataBaseService.csproj" />
+        <ProjectReference Include="..\ServerApp\ServerApp.csproj" />
+        <ProjectReference Include="..\ServerWebCore\ServerWebCore.csproj" />
     </ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="Abp.AspNetCore" Version="10.0.0" />
         <PackageReference Include="Abp.ZeroCore" Version="10.0.0" />
-        <PackageReference Include="Jason.Abp.Castle.Serilog" Version="1.0.0"/>
+        <PackageReference Include="Jason.Abp.Castle.Serilog" Version="1.0.0" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.0">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -38,31 +40,32 @@
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
+        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.2" />
         <PackageReference Include="NSwag.AspNetCore" Version="14.2.0" />
-        <PackageReference Include="Serilog" Version="4.1.0"/>
-        <PackageReference Include="Serilog.AspNetCore" Version="8.0.3"/>
+        <PackageReference Include="Serilog" Version="4.1.0" />
+        <PackageReference Include="Serilog.AspNetCore" Version="8.0.3" />
         <PackageReference Include="Serilog.Extensions.Logging.File" Version="3.0.0" />
         <PackageReference Include="Serilog.Settings.Configuration" Version="8.0.4" />
-        <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0"/>
-        <PackageReference Include="SignalRSwaggerGen" Version="4.7.0"/>
-        <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="7.0.0"/>
-        <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="7.0.0"/>
-        <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="7.0.0"/>
+        <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
+        <PackageReference Include="SignalRSwaggerGen" Version="4.7.0" />
+        <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="7.0.0" />
+        <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="7.0.0" />
+        <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="7.0.0" />
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="Plugins\"/>
-        <Folder Include="wwwroot\"/>
+        <Folder Include="Plugins\" />
+        <Folder Include="wwwroot\" />
     </ItemGroup>
 
     <ItemGroup>
-        <Compile Remove="RelayHubModule.cs"/>
+        <Compile Remove="RelayHubModule.cs" />
     </ItemGroup>
 
     <ItemGroup>
-        <_ContentIncludedByDefault Remove="wwwroot\swagger\ui\abp.js"/>
-        <_ContentIncludedByDefault Remove="wwwroot\swagger\ui\abp.swagger.js"/>
-        <_ContentIncludedByDefault Remove="wwwroot\swagger\ui\index.html"/>
+        <_ContentIncludedByDefault Remove="wwwroot\swagger\ui\abp.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\swagger\ui\abp.swagger.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\swagger\ui\index.html" />
     </ItemGroup>
 
     <ItemGroup>
