@@ -25,7 +25,9 @@ namespace DataBaseService.EntityFrameworkCore
                 }
                 else
                 {
-                    RelayDbContextConfigurer.Configure(options.DbContextOptions, options.ConnectionString);
+                    var connectionString = Configuration.DefaultNameOrConnectionString;
+                    Console.WriteLine($"Connection String in PreInitialize: {connectionString}");
+                    RelayDbContextConfigurer.Configure(options.DbContextOptions, connectionString);
                 }
             });
         }
